@@ -1,0 +1,27 @@
+
+Flutter 스터디 과정 
+앞으로 까먹는 핵심 내용을 여기로 올릴예정임!
+
+
+ 1. 프로젝트 추가 세팅  
+
+ ** Lint 관련 워닝 무시하는 법  ** 
+
+ -  (analysis_options.yaml)
+
+rules:
+  prefer_const_constructors: false
+  avoid_print: false
+  prefer_typing_uninitialized_variables: false
+  prefer_const_constructors_in_immutables: false
+
+
+ ** 이미지 자료 사용 ** 
+
+  (pubspec.yaml 파일)
+
+  flutter:
+  assets:
+    - assets/
+
+
