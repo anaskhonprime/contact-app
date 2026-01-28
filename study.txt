@@ -59,5 +59,37 @@ rules:
   - CSS에서 자주 사용하던 FLEX flutter에서도 편하게 사용 가능
   - 문법은   Flexible(child : Container(), flex : 3),
             Flexible(child : Container(), flex : 7),
-    처럼 10 단위로 화면을 나눠서 스타일함!          
+    처럼 10 단위로 화면을 나눠서 스타일함!
+  - Expended() 뜻은 flex : 1 가지고 있는 Flexible 박스임
+    다른 남은 공간은 사이즈를 잡을때 편하게 사용 가능
+
+    예를 들어 : Expended(child : Container()),
+               Container(width : 100)
+    이럴때 아래 박스 100 사이즈 나머지 화면은 Expended으로 잡아줌! 
+
+
+
+** ListView ""
+
+ - 자동 스크롤바 생김
+ - 스크롱 위치 감시 가능
+ - 메모리 절약기능 큰 장점
+ - 여러가지 요소들 순서대로 쭉 출력 가능 
+
+
+** ListView.builder() ** 
+
+  - 스크롤 시 필요한 아이템만 생성하는 리스트
+  - 아이템 많아도 빠름 + 화면에 보이는 것만 렌더링
+  - API·DB 리스트 표시할때 자주 씀
+  - 코드예시
+
+  ListView.builder(
+    itemCount : item.length   // 개수
+    itemBuilder : (context, index) {   // context은 그냥 기본 parameter
+                                       // index 원래 써던 i 
+      return Container();
+    }
+  ) 
+
     
