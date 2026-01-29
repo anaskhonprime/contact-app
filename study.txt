@@ -92,4 +92,22 @@ rules:
     }
   ) 
 
+
+** AlertDialog() **
+
+  - 앱에서 자주 보이는 팝업장 기술
+  - showDialog()부터 시작, contect, builder 필수
+    showDialog(context : contect, builder (contect){
+      return 디아로그 아무거나~~ 
+    })
     
+  - AlertDialog() 주로 자주 사용되는 알림장~
+  - title, contect(입력같은거나 다른 내용), actions[](보통 다양한 버튼 등 자주 보임)
+
+  showDialog(contect:contect, builder(contect){
+    return AlertDialog(
+      title : ~ 제목 
+      contect : 내용 추가, 입력장은 TextField 사용
+      actions[이것저것 버튼 사용],
+    )
+  })

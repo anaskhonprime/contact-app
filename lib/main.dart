@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MaterialApp(debugShowCheckedModeBanner: false, home: MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -13,81 +13,97 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   var a = 1;
-  var name = [
-    {'김민이': 0},
-    {'김용전': 0},
-    {'치킨집': 0},
-  ];
+  var name = ['김민지', '김진여', '치민집'];
+  var scores = [0, 0, 0];
+  var newUser = '';
+
+  addUser(a) {
+    setState(() {
+      name.add(a);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          child: Text(a.toString()),
-          onPressed: () {
-            setState(() {});
-          },
-        ),
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: Text(a.toString()),
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return DialogUI(newUser: newUser, addUser: addUser);
+            },
+          );
+        },
+      ),
 
-        appBar: AppBar(
-          backgroundColor: Color(0xfff4f4f4),
-          title: Text("App"),
-          actions: [
-            Align(
-              alignment: Alignment.topRight,
-              child: Container(
-                width: 250,
-                height: double.infinity,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(Icons.search),
-                    Icon(Icons.menu),
-                    Icon(Icons.notification_add),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-        body: Row(
-          children: [
-            Flexible(
-              flex: 7,
-              child: ListView.builder(
-                itemCount: 3,
-                itemBuilder: (context, i) {
-                  return ListTile(
-                    leading: Text(name[i].values.first.toString()),
-                    title: Text(name[i].keys.first),
-                  );
-                },
-              ),
-            ),
-
-            Flexible(
-              flex: 3,
-              child: Column(
+      appBar: AppBar(
+        backgroundColor: Color(0xfff4f4f4),
+        title: Text("Contact App"),
+        actions: [
+          Align(
+            alignment: Alignment.topRight,
+            child: SizedBox(
+              width: 250,
+              height: double.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  TextButton(
-                    onPressed: () {
-                      setState(() {
-                        
-                      });
-                    },
-                    child: Text("+"),
-                  ),
-                  TextButton(onPressed: () {}, child: Text("+")),
-                  TextButton(onPressed: () {}, child: Text("+")),
+                  Icon(Icons.search),
+                  Icon(Icons.menu),
+                  Icon(Icons.notification_add),
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
+      body: ListView.builder(
+        itemCount: name.length,
+        itemBuilder: (context, i) {
+          return ListTile(
+            leading: Icon(Icons.contact_mail),
+            title: Text(name[i].toString()),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class DialogUI extends StatelessWidget {
+  DialogUI({super.key, this.newUser, this.addUser});
+  final addUser;
+  final newUser;
+
+  var inputData = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text("Contant App"),
+      content: TextField(
+        controller: inputData,
+        keyboardType: TextInputType.phone,
+        decoration: InputDecoration(border: UnderlineInputBorder()),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {     
+            addUser(inputData.text);
+            Navigator.pop(context);
+          },
+          child: Text("OK"),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text("Cancel"),
+        ),
+      ],
     );
   }
 }
