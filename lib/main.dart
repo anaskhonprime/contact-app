@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
 
 void main() {
   runApp(MaterialApp(debugShowCheckedModeBanner: false, home: MyApp()));
@@ -12,8 +14,31 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
+  getPermisson() async {
+    var status = await Permission.contacts.status;
+
+    if(status.isGranted){
+      print("Granted");
+
+      // Get all contacts (fully fetched)
+      List<Contact> contacts = await FlutterContacts.getContacts();
+      contacts = await FlutterContacts.getContacts(
+          withProperties: true);
+
+      setState(() {
+        name = contacts;
+      });
+
+      print(contacts);
+
+    } else if(status.isDenied){
+      print("Denied");
+    }
+  }
+
   var a = 1;
-  var name = ['김민지', '김진여', '치민집'];
+  var name = [];
   var scores = [0, 0, 0];
   var newUser = '';
 
@@ -53,7 +78,9 @@ class _MyAppState extends State<MyApp> {
                 children: [
                   Icon(Icons.search),
                   Icon(Icons.menu),
-                  Icon(Icons.notification_add),
+                  IconButton(onPressed: (){
+                    getPermisson();
+                  }, icon: Icon(Icons.contacts)),
                 ],
               ),
             ),
@@ -65,7 +92,7 @@ class _MyAppState extends State<MyApp> {
         itemBuilder: (context, i) {
           return ListTile(
             leading: Icon(Icons.contact_mail),
-            title: Text(name[i].toString()),
+            title: Text(name[i].displayName),
           );
         },
       ),
